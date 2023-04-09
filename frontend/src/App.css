@@ -1,3 +1,17 @@
 .App {
   text-align: center;
 }
+
+.chakra-ui-light {
+  background: #cecece;
+}
+
+u {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+td,
+th {
+  font-weight: 500;
+}
