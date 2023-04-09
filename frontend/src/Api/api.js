@@ -27,7 +27,6 @@ export const updateUser = (id, form) => {
 
 // ----------- get posts ---------
 export const addNewPost = (form) => {
-  console.log("form: ", form);
   return axios.post(`http://localhost:8080/posts`, form);
 };
 
@@ -54,4 +53,14 @@ export const likePost = (id) => {
 // ----------- unlike post ---------
 export const unlikePost = (id) => {
   return axios.post(`http://localhost:8080/posts/${id}/unlike`);
+};
+
+// ----------- top posts ---------
+export const getTopPosts = () => {
+  return axios.get(`http://localhost:8080/posts/analytics/posts/top-liked`);
+};
+
+// ----------- get total posts ---------
+export const getTotalPosts = () => {
+  return axios.get(`http://localhost:8080/posts/analytics/posts`);
 };

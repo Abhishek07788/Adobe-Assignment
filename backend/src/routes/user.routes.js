@@ -19,8 +19,8 @@ app.post("/", async (req, res) => {
     const user = await User.findOne({ email: email });
     if (user) {
       return res
-        .status(500)
-        .send({ status: false, message: "User Already Exist!!" });
+        .status(200)
+        .send({ status: false, message: "Email Already Exist!!" });
     } else {
       await User.create(req.body);
       return res.status(200).send({ status: true, message: "User Created!!" });
@@ -45,7 +45,10 @@ app.get("/:id", async (req, res) => {
 app.put("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    await User.updateOne({ _id: id }, { $Set: req.body });
+    await User.updateOne(
+      { _id: id },
+      { $set: { ...req.body, updated_at: Date() } }
+    );
     res.status(200).send("User updated!!");
   } catch (e) {
     res.status(500).send(e);

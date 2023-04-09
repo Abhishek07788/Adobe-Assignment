@@ -5,8 +5,8 @@ const postRouter = require("./routes/post.routes");
 const dbConnection = require("./config/db");
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 

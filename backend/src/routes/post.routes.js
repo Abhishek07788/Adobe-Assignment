@@ -37,7 +37,10 @@ app.get("/:id", async (req, res) => {
 app.put("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    await Post.updateOne({ _id: id }, { $set: req.body });
+    await Post.updateOne(
+      { _id: id },
+      { $set: { ...req.body, updated_at: Date() } }
+    );
     res.status(200).send("Post updated!!");
   } catch (e) {
     res.status(500).send(e);
@@ -74,7 +77,7 @@ app.post("/:id/unlike", async (req, res) => {
     const post = await Post.findOne({ _id: id }, { _id: 0, likes: 1 });
     if (post.likes === 0) {
       return res
-        .status(300)
+        .status(200)
         .send({ message: "The count should not go below 0!!" });
     } else {
       await Post.updateOne({ _id: id }, { $set: { likes: post.likes - 1 } });
@@ -99,7 +102,7 @@ app.get("/analytics/posts", async (req, res) => {
 app.get("/analytics/posts/top-liked", async (req, res) => {
   try {
     const topPosts = await Post.find().sort({ likes: -1 }).limit(5);
-    res.status(200).send({ topPosts });
+    res.status(200).send(topPosts);
   } catch (e) {
     res.status(500).send(e);
   }
